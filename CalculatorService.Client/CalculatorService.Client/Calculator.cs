@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Threading;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Net;
 using System.IO;
@@ -12,7 +9,7 @@ using Newtonsoft.Json;
 namespace CalculatorService.Client
 {
 
-    class Program
+    class Calculator
     {
 
         // Display the welcome / loading
@@ -43,8 +40,12 @@ namespace CalculatorService.Client
         public static void Exit()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(" ~    ~    ~    ~    ~ ");
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("See you next time!");
+            Console.WriteLine("   See you next time  ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(" ~    ~    ~    ~    ~ ");
             Thread.Sleep(1200);
         }
 
@@ -59,6 +60,7 @@ namespace CalculatorService.Client
             Console.ForegroundColor = ConsoleColor.DarkCyan; Console.WriteLine("3. Compute the multiplication of two or more operands.");
             Console.ForegroundColor = ConsoleColor.DarkBlue; Console.WriteLine("4. Compute the division of two or more operands.");
             Console.ForegroundColor = ConsoleColor.DarkCyan; Console.WriteLine("5. Compute the square root two or more operands.");
+            Console.ForegroundColor = ConsoleColor.Magenta; Console.WriteLine("6. Request all operations for an Id.");
             Console.ForegroundColor = ConsoleColor.Gray; Console.WriteLine("0. Exit.");
             string key = Console.ReadKey().KeyChar.ToString();
 
@@ -85,14 +87,15 @@ namespace CalculatorService.Client
                 case 3: Mult(); break;
                 case 4: Div(); break;
                 case 5: Sqrt(); break;
+                case 6: Query(); break;
                 default: break;
             }
         }
 
-        // Operates the Square Root 
+        // Operate the Square Root 
         private static void Sqrt()
         {
-            int num, res = 0;
+            int num, res = 0; string calc = "Sqrt";
             do
             {
                 Console.Clear(); Console.ForegroundColor = ConsoleColor.Gray;
@@ -126,20 +129,21 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                SqrtRes sqrtres = JsonConvert.DeserializeObject<SqrtRes>(CallRestMethod("https://localhost:44338/Calculator/Sqrt", param));
+                SqrtRes sqrtres = JsonConvert.DeserializeObject<SqrtRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = "√" + res.ToString() + " = " + sqrtres.Square;
                 Console.WriteLine(operation);
+                Save(operation, calc);
                 Console.ReadKey();
             }
         }
 
-        // Operates the Division
+        // Operate the Division
         private static void Div()
         {
 
-            int num, divd = 0, divs = 0;
+            int num, divd = 0, divs = 0; string calc = "Div";
             do
             {
                 Console.Clear(); Console.ForegroundColor = ConsoleColor.Gray;
@@ -202,19 +206,20 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                DivRes divres = JsonConvert.DeserializeObject<DivRes>(CallRestMethod("https://localhost:44338/Calculator/Div", param));
+                DivRes divres = JsonConvert.DeserializeObject<DivRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = divd.ToString() + " % " + divs.ToString() + " = " + divres.Quotient + " (Remainder: " + divres.Remainder + ")";
                 Console.WriteLine(operation);
+                Save(operation, calc);
                 Console.ReadKey();
             }
         }
 
-        // Operates the Multiply
+        // Operate the Multiply
         private static void Mult()
         {
-            int num;
+            int num; string calc = "Mult";
             List<int> nums = new List<int>();
             do
             {
@@ -259,7 +264,7 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                MultRes multres = JsonConvert.DeserializeObject<MultRes>(CallRestMethod("https://localhost:44338/Calculator/Mult", param));
+                MultRes multres = JsonConvert.DeserializeObject<MultRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = "";
@@ -271,14 +276,15 @@ namespace CalculatorService.Client
                 operation += "= " + multres.Product;
 
                 Console.WriteLine(operation);
+                Save(operation, calc);
                 Console.ReadKey();
             }
         }
 
-        // Operates the Substraction
+        // Operate the Substraction
         private static void Sub()
         {
-            int num, min = 0, sub = 0;
+            int num, min = 0, sub = 0; string calc = "Sub";
             do
             {
                 Console.Clear(); Console.ForegroundColor = ConsoleColor.Gray;
@@ -341,29 +347,30 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                SubRes subres = JsonConvert.DeserializeObject<SubRes>(CallRestMethod("https://localhost:44338/Calculator/Sub", param));
+                SubRes subres = JsonConvert.DeserializeObject<SubRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = "";
                 operation += min.ToString() + " - " + sub.ToString() + " = " + subres.Difference;
                 
                 Console.WriteLine(operation);
+                Save(operation, calc);
                 Console.ReadKey();
             }
         }
 
-        // Operates the Addition
+        // Operate the Addition
         private static void Add()
         {
 
-            int num;
+            int num; string calc = "Add";
             List<int> nums = new List<int>();
             do
             {
                 Console.Clear(); Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("Welcome to the Calculator!\n");
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.Write("-- Adding -- ");
+                Console.Write("-- Adding --");
 
                 // Show the already inserted numbers if in case
                 if (nums.Count > 0)
@@ -401,7 +408,7 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                AddRes addres = JsonConvert.DeserializeObject<AddRes>(CallRestMethod("https://localhost:44338/Calculator/Add", param));
+                AddRes addres = JsonConvert.DeserializeObject<AddRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = "";
@@ -414,7 +421,29 @@ namespace CalculatorService.Client
                 operation += "= " +addres.Sum;
                 Console.WriteLine(operation);
                 Console.ReadKey();
+                Save(operation, calc);
             }
+        }
+
+        // Store in the server an operation
+        private static void Save(string op, string calc)
+        {
+            //Create new object and set the values
+            Dictionary<string, string> data = new Dictionary<string, string> { };
+
+            string date = DateTime.Now.ToString("dd/MM/yyyy");
+            string id = DateTime.Now.ToString("mm");
+
+            data.Add("operation", op);
+            data.Add("calculation", calc);
+            data.Add("date", date);
+            data.Add("id", id);
+
+            // Serialize it
+            string param = JsonConvert.SerializeObject(data);
+
+            // Send the petition and deserialize the response
+            CallRestMethod("https://localhost:44338/Journal/Store", param);
         }
 
         // Ask and provide a valid number
@@ -503,6 +532,65 @@ namespace CalculatorService.Client
             return result;
         }
 
+        // Display all the operations with the chosen ID
+        public static void Query()
+        {
+            int id = 0, num;
+
+            do
+            {
+                Console.Clear(); Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine("Welcome to the Calculator!\n");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("-- Tracking Id -- "); Console.WriteLine();
+
+                // Ask for the next value
+                Console.Write("Insert a value (0 to exit): ");
+                num = AskValue();
+
+                // If it is not exit or invalid 
+                if (num != 0 && num != -1001)
+                {
+                    id = num;
+                    num = 0;
+                }
+
+            } while (num != 0);
+
+            // Create new object and set the values
+            Query qu = new Query();
+            qu.Id = id;
+
+            // Serialize it
+            string param = JsonConvert.SerializeObject(qu);
+
+            // Send the petition and deserialize the response
+            QueryRes qures = JsonConvert.DeserializeObject<QueryRes>(CallRestMethod("https://localhost:44338/Journal/Query", param));
+
+            // Deserialize each operation
+            List<string> qulist = qures.Operations;
+            List<Oper> res = new List<Oper>{ };
+
+            foreach(string q in qulist)
+            {
+                res.Add(JsonConvert.DeserializeObject<Oper>(q));
+            }
+
+            Console.WriteLine();
+            foreach (Oper o in res)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Operation: {0,0:0}      Calculation: {1,0:0}      Date: {2,0:0}", o.Operation, o.Calculation, o.Date);
+            }
+
+            if(qulist.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("No operations found for ID number " + id);
+            }
+            
+            Console.ReadKey();
+        }
 
         static void Main(string[] args)
         {
@@ -511,8 +599,8 @@ namespace CalculatorService.Client
             int opt;
             do
             {
-               opt = Menu();
-               if(opt > 0 && opt < 6)
+                opt = Menu();
+                if (opt > 0 && opt < 7)
                 {
                     Exec(opt);
                 }
@@ -520,7 +608,8 @@ namespace CalculatorService.Client
             } while (opt != 0);
 
             Exit();
-    
+
         }
     }
+    
 }

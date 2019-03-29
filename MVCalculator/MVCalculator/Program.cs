@@ -12,8 +12,15 @@ namespace MVCalculator
 {
     public class Program
     {
+
+        public static class Journal
+        {
+            public static Dictionary<int, List<string>> journal;
+        }
+
         public static void Main(string[] args)
         {
+            Program.Journal.journal = new Dictionary<int, List<string>> { };
             CreateWebHostBuilder(args).Build().Run();
         }
 

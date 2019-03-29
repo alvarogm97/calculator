@@ -741,11 +741,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alvaro\\source\\repos\\CalculatorService.Client\\CalculatorService.Client\\CalculatorService.Client.csproj",
+      "projectUniqueName": "C:\\Users\\Alvaro\\source\\repos\\agomez97\\CalculatorService.Client\\CalculatorService.Client\\CalculatorService.Client.csproj",
       "projectName": "CalculatorService.Client",
-      "projectPath": "C:\\Users\\Alvaro\\source\\repos\\CalculatorService.Client\\CalculatorService.Client\\CalculatorService.Client.csproj",
+      "projectPath": "C:\\Users\\Alvaro\\source\\repos\\agomez97\\CalculatorService.Client\\CalculatorService.Client\\CalculatorService.Client.csproj",
       "packagesPath": "C:\\Users\\Alvaro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alvaro\\source\\repos\\CalculatorService.Client\\CalculatorService.Client\\obj\\",
+      "outputPath": "C:\\Users\\Alvaro\\source\\repos\\agomez97\\CalculatorService.Client\\CalculatorService.Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

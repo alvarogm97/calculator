@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MVCalculator.Models;
 
 namespace MVCalculator.Models
 {
@@ -14,5 +15,7 @@ namespace MVCalculator.Models
         }
 
         public DbSet<MVCalculator.Models.Calculator> Calculator { get; set; }
+
+        public DbSet<MVCalculator.Models.Journal> Journal { get; set; }
     }
 }
