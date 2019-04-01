@@ -28,13 +28,22 @@ namespace MVCalculator
             {
                 FileName = "log.txt",
                 ArchiveEvery = NLog.Targets.FileArchivePeriod.Day, 
-                Layout = "${longdate} | ${level:uppercase=true} | ${message}"
+                Layout = "${longdate} | ${level:uppercase=true} | ${message}", 
+                
+            };
+
+            var logtrace = new NLog.Targets.TraceTarget("logtrace")
+            {
+                Name = "trace",
+                Layout = "${logger} ${message}"
             };
 
             var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
 
             config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logconsole);
             config.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, logfile);
+
+            config.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Fatal, logtrace);
             
             NLog.LogManager.Configuration = config;
 

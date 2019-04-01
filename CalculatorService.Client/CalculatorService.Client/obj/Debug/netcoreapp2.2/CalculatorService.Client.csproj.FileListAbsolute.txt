@@ -20,3 +20,4 @@ C:\Users\Alvaro\source\repos\agomez97\CalculatorService.Client\CalculatorService
 C:\Users\Alvaro\source\repos\agomez97\CalculatorService.Client\CalculatorService.Client\obj\Debug\netcoreapp2.2\CalculatorService.Client.AssemblyInfo.cs
 C:\Users\Alvaro\source\repos\agomez97\CalculatorService.Client\CalculatorService.Client\obj\Debug\netcoreapp2.2\CalculatorService.Client.dll
 C:\Users\Alvaro\source\repos\agomez97\CalculatorService.Client\CalculatorService.Client\obj\Debug\netcoreapp2.2\CalculatorService.Client.pdb
+C:\Users\Alvaro\source\repos\agomez97\CalculatorService.Client\CalculatorService.Client\bin\Debug\netcoreapp2.2\Settings.job

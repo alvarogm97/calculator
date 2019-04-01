@@ -40,12 +40,12 @@ namespace CalculatorService.Client
         public static void Exit()
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(" ~    ~    ~    ~    ~ ");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine(" #                   #");
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("   See you next time  ");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(" ~    ~    ~    ~    ~ ");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine(" #                   #");
             Thread.Sleep(1200);
         }
 
@@ -92,6 +92,69 @@ namespace CalculatorService.Client
             }
         }
 
+        // Display all the operations with the chosen ID
+        public static void Query()
+        {
+            int id = -1, num;
+
+            do
+            {
+                Console.Clear(); Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine("Welcome to the Calculator!\n");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("-- Tracking Id -- "); Console.WriteLine();
+
+                // Ask for the next value
+                Console.Write("Insert a value (-1 to exit): ");
+                num = AskValue();
+
+                // If it is not exit or invalid 
+                if (num >= 0)
+                {
+                    id = num;
+                    num = -1;
+                }
+
+            } while (num != -1);
+
+            if (id != -1)
+            {
+                // Create new object and set the values
+                Query qu = new Query();
+                qu.Id = id;
+
+                // Serialize it
+                string param = JsonConvert.SerializeObject(qu);
+
+                // Send the petition and deserialize the response
+                QueryRes qures = JsonConvert.DeserializeObject<QueryRes>(CallRestMethod("https://mvcalculator.azurewebsites.net/Journal/Query", param));
+
+                // Deserialize each operation
+                List<string> qulist = qures.Operations;
+                List<Oper> res = new List<Oper> { };
+
+                foreach (string q in qulist)
+                {
+                    res.Add(JsonConvert.DeserializeObject<Oper>(q));
+                }
+
+                Console.WriteLine();
+                foreach (Oper o in res)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("Operation: {0,0:0}      Calculation: {1,0:0}      Date: {2,0:0}", o.Operation, o.Calculation, o.Date);
+                }
+
+                if (qulist.Count == 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("No operations found for ID number " + id);
+                }
+                Console.ReadKey();
+            }
+
+        }
+
         // Operate the Square Root 
         private static void Sqrt()
         {
@@ -112,6 +175,10 @@ namespace CalculatorService.Client
                 if (num != 0 && num != -1)
                 {
                     res = num;
+                    num = 0;
+                }
+                else if(num == -1)
+                {
                     num = 0;
                 }
 
@@ -530,66 +597,6 @@ namespace CalculatorService.Client
             result = responseStream.ReadToEnd();
             webresponse.Close();
             return result;
-        }
-
-        // Display all the operations with the chosen ID
-        public static void Query()
-        {
-            int id = 0, num;
-
-            do
-            {
-                Console.Clear(); Console.ForegroundColor = ConsoleColor.Gray;
-                Console.WriteLine("Welcome to the Calculator!\n");
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("-- Tracking Id -- "); Console.WriteLine();
-
-                // Ask for the next value
-                Console.Write("Insert a value (0 to exit): ");
-                num = AskValue();
-
-                // If it is not exit or invalid 
-                if (num != 0 && num != -1001)
-                {
-                    id = num;
-                    num = 0;
-                }
-
-            } while (num != 0);
-
-            // Create new object and set the values
-            Query qu = new Query();
-            qu.Id = id;
-
-            // Serialize it
-            string param = JsonConvert.SerializeObject(qu);
-
-            // Send the petition and deserialize the response
-            QueryRes qures = JsonConvert.DeserializeObject<QueryRes>(CallRestMethod("https://mvcalculator.azurewebsites.net/Journal/Query", param));
-
-            // Deserialize each operation
-            List<string> qulist = qures.Operations;
-            List<Oper> res = new List<Oper>{ };
-
-            foreach(string q in qulist)
-            {
-                res.Add(JsonConvert.DeserializeObject<Oper>(q));
-            }
-
-            Console.WriteLine();
-            foreach (Oper o in res)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("Operation: {0,0:0}      Calculation: {1,0:0}      Date: {2,0:0}", o.Operation, o.Calculation, o.Date);
-            }
-
-            if(qulist.Count == 0)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("No operations found for ID number " + id);
-            }
-            
-            Console.ReadKey();
         }
 
         static void Main(string[] args)

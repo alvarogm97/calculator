@@ -53,7 +53,7 @@ namespace MVCalculator.Controllers
                 streamWriter.Flush();
                 streamWriter.Close();
             }
-
+            
             var logger = NLog.LogManager.GetCurrentClassLogger();
             logger.Info($"Query operation (Id {qu.Id})");
         }
