@@ -1,10 +1,5 @@
-﻿using CalculatorService.Client;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace MVCalculator.Models
 {
@@ -14,6 +9,7 @@ namespace MVCalculator.Models
         [Key]
         public int id { get; set; }  
 
+        // Look for a certain id
         public List<string> query(int id)
         {
             List<string> values = new List<string>();
@@ -29,6 +25,7 @@ namespace MVCalculator.Models
             return values;
         }
 
+        // Accumulates the operation 
         public void store(int id, string query)
         {
             List<string> aux = new List<string>();

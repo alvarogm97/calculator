@@ -1,0 +1,1 @@
+dotnet CalculatorService.Client.dll %*

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 namespace MVCalculator.Models
@@ -11,6 +9,7 @@ namespace MVCalculator.Models
         [Key]
         public int res { get; set; }
 
+        // Operates the addition
         public int add(List<int> nums)
         {
             int res = 0;
@@ -23,6 +22,7 @@ namespace MVCalculator.Models
             return res;
         }
 
+        // Operates the subtraction
         public int sub(int min, int sub)
         {
             int res = min - sub;
@@ -30,6 +30,7 @@ namespace MVCalculator.Models
             return res;
         }
 
+        // Operates the multiply
         public int mult(List<int> nums)
         {
             int res = 1;
@@ -49,6 +50,7 @@ namespace MVCalculator.Models
             return res;
         }
 
+        // Operates the division
         public int div(int divd, int divs)
         {
             int res;
@@ -65,6 +67,7 @@ namespace MVCalculator.Models
             return res;
         }
 
+        // Gets the remainder
         public int rem(int divd, int divs)
         {
             int res;
@@ -81,6 +84,7 @@ namespace MVCalculator.Models
             return res;
         }
 
+        // Operates the square root
         public int sqrt(int num)
         {
             double res;

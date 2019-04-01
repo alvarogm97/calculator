@@ -129,7 +129,7 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                SqrtRes sqrtres = JsonConvert.DeserializeObject<SqrtRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
+                SqrtRes sqrtres = JsonConvert.DeserializeObject<SqrtRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = "√" + res.ToString() + " = " + sqrtres.Square;
@@ -206,7 +206,7 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                DivRes divres = JsonConvert.DeserializeObject<DivRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
+                DivRes divres = JsonConvert.DeserializeObject<DivRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = divd.ToString() + " % " + divs.ToString() + " = " + divres.Quotient + " (Remainder: " + divres.Remainder + ")";
@@ -216,7 +216,7 @@ namespace CalculatorService.Client
             }
         }
 
-        // Operate the Multiply
+        // Operate the Multiplication
         private static void Mult()
         {
             int num; string calc = "Mult";
@@ -264,7 +264,7 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                MultRes multres = JsonConvert.DeserializeObject<MultRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
+                MultRes multres = JsonConvert.DeserializeObject<MultRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = "";
@@ -281,7 +281,7 @@ namespace CalculatorService.Client
             }
         }
 
-        // Operate the Substraction
+        // Operate the Subtraction
         private static void Sub()
         {
             int num, min = 0, sub = 0; string calc = "Sub";
@@ -347,7 +347,7 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                SubRes subres = JsonConvert.DeserializeObject<SubRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
+                SubRes subres = JsonConvert.DeserializeObject<SubRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = "";
@@ -408,7 +408,7 @@ namespace CalculatorService.Client
                 string param = JsonConvert.SerializeObject(op);
 
                 // Send the petition and deserialize the response
-                AddRes addres = JsonConvert.DeserializeObject<AddRes>(CallRestMethod($"https://localhost:44338/Calculator/{calc}", param));
+                AddRes addres = JsonConvert.DeserializeObject<AddRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
 
                 // Build the complete operation and show it
                 string operation = "";
@@ -443,7 +443,7 @@ namespace CalculatorService.Client
             string param = JsonConvert.SerializeObject(data);
 
             // Send the petition and deserialize the response
-            CallRestMethod("https://localhost:44338/Journal/Store", param);
+            CallRestMethod("https://mvcalculator.azurewebsites.net/Journal/Store", param);
         }
 
         // Ask and provide a valid number
@@ -565,7 +565,7 @@ namespace CalculatorService.Client
             string param = JsonConvert.SerializeObject(qu);
 
             // Send the petition and deserialize the response
-            QueryRes qures = JsonConvert.DeserializeObject<QueryRes>(CallRestMethod("https://localhost:44338/Journal/Query", param));
+            QueryRes qures = JsonConvert.DeserializeObject<QueryRes>(CallRestMethod("https://mvcalculator.azurewebsites.net/Journal/Query", param));
 
             // Deserialize each operation
             List<string> qulist = qures.Operations;

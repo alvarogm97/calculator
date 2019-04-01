@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Encodings.Web;
 using MVCalculator.Models;
-using System.Net;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using CalculatorService.Client;
-using System.Collections.Specialized;
 
 namespace MVCalculator.Controllers
 {
@@ -29,7 +23,7 @@ namespace MVCalculator.Controllers
 
         public void Query()
         {
-            
+            // Receive and process the POST data
             string res = HttpContext.Request.Method.ToString();
 
             Encoding enc = System.Text.Encoding.GetEncoding("utf-8");
@@ -38,15 +32,19 @@ namespace MVCalculator.Controllers
 
             Query qu = JsonConvert.DeserializeObject<Query>(body);
 
+            // Get the result
             Journal J = new Journal();
             List<string> opers = J.query(qu.Id);
 
+            // Create a Result Object
             QueryRes qures = new QueryRes();
             qures.Operations = new List<string> { };
             qures.Operations = opers;
 
+            // Serialize it
             string param = JsonConvert.SerializeObject(qures);
 
+            // Send it back using POST
             HttpContext.Response.ContentType = "application/json";
             using (var streamWriter = new StreamWriter(HttpContext.Response.Body, enc))
             {
@@ -56,6 +54,8 @@ namespace MVCalculator.Controllers
                 streamWriter.Close();
             }
 
+            var logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info($"Query operation (Id {qu.Id})");
         }
 
         // 
@@ -63,7 +63,7 @@ namespace MVCalculator.Controllers
 
         public void Store()
         {
-
+            // Receive and process the POST data
             string res = HttpContext.Request.Method.ToString();
 
             Encoding enc = System.Text.Encoding.GetEncoding("utf-8");
@@ -78,12 +78,12 @@ namespace MVCalculator.Controllers
             o.Calculation = data["calculation"];
             o.Date = data["date"];
 
-
             Journal J = new Journal();
+
+            // Store it in a global variable
             J.store(int.Parse(data["id"]), JsonConvert.SerializeObject(o));
             
         }
-
 
     }
 }

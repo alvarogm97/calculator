@@ -21,6 +21,24 @@ namespace MVCalculator
         public static void Main(string[] args)
         {
             Program.Journal.journal = new Dictionary<int, List<string>> { };
+
+            var config = new NLog.Config.LoggingConfiguration();
+
+            var logfile = new NLog.Targets.FileTarget("logfile")
+            {
+                FileName = "log.txt",
+                ArchiveEvery = NLog.Targets.FileArchivePeriod.Day, 
+                Layout = "${longdate} | ${level:uppercase=true} | ${message}"
+            };
+
+            var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
+
+            config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logconsole);
+            config.AddRule(NLog.LogLevel.Debug, NLog.LogLevel.Fatal, logfile);
+            
+            NLog.LogManager.Configuration = config;
+
+
             CreateWebHostBuilder(args).Build().Run();
         }
 

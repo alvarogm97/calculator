@@ -1,0 +1,4 @@
+2019-04-01 11:42:26.8225 | INFO | Sub operation
+2019-04-01 11:42:36.3675 | INFO | Sqrt operation
+2019-04-01 11:42:42.8576 | INFO | Query operation (Id 41)
+2019-04-01 11:42:47.5057 | INFO | Query operation (Id 42)

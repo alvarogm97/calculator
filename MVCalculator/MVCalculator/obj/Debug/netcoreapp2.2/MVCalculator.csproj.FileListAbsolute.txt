@@ -50,11 +50,6 @@ C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcor
 C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\MVCalculator.TagHelpers.input.cache
 C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\MVCalculator.TagHelpers.output.cache
 C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\MVCalculator.RazorCoreGenerate.cache
-C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\Razor\Views\Calculators\Create.g.cshtml.cs
-C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\Razor\Views\Calculators\Delete.g.cshtml.cs
-C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\Razor\Views\Calculators\Details.g.cshtml.cs
-C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\Razor\Views\Calculators\Edit.g.cshtml.cs
-C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\Razor\Views\Calculators\Index.g.cshtml.cs
 C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\Razor\Views\Calculator\Index.g.cshtml.cs
 C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
 C:\Users\Alvaro\source\repos\agomez97\MVCalculator\MVCalculator\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
