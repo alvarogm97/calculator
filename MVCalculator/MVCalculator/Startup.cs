@@ -55,10 +55,59 @@ namespace MVCalculator
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
+                /*routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");*/
+
+                routes.MapRoute(
+                  "Add",
+                  "Calculator/Add", // URL pattern
+                   new { controller = "Calculator", action = "Add" }
+                );
+
+                routes.MapRoute(
+                  "Sub",
+                  "Calculator/Sub", // URL pattern
+                   new { controller = "Calculator", action = "Sub" }
+                );
+
+                routes.MapRoute(
+                  "Mult",
+                  "Calculator/Mult", // URL pattern
+                   new { controller = "Calculator", action = "Mult" }
+                );
+
+                routes.MapRoute(
+                  "Add",
+                  "Calculator/Div", // URL pattern
+                   new { controller = "Calculator", action = "Div" }
+                );
+
+                routes.MapRoute(
+                  "Sqrt",
+                  "Calculator/Sqrt", // URL pattern
+                   new { controller = "Calculator", action = "Sqrt" }
+                );
+
+                routes.MapRoute(
+                  "Query",
+                  "Journal/Query", // URL pattern
+                   new { controller = "Journal", action = "Query" }
+                );
+
+                routes.MapRoute(
+                  "Store",
+                  "Journal/Store", // URL pattern
+                   new { controller = "Journal", action = "Store" }
+                );
+
+                routes.MapRoute(
+                "PageNotFound",
+                "{*catchall}",
+                new { controller = "Error", action = "PageNotFound" }
+                );
             });
+ 
         }
     }
 }

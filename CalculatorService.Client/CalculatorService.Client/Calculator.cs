@@ -126,33 +126,49 @@ namespace CalculatorService.Client
                 // Serialize it
                 string param = JsonConvert.SerializeObject(qu);
 
-                // Send the petition and deserialize the response
-                QueryRes qures = JsonConvert.DeserializeObject<QueryRes>(CallRestMethod("https://mvcalculator.azurewebsites.net/Journal/Query", param));
+                // Get the response
+                string response = CallRestMethod($"https://mvcalculator.azurewebsites.net/Journal/Query", param);
 
-                // Deserialize each operation
-                List<string> qulist = qures.Operations;
-                List<Oper> res = new List<Oper> { };
-
-                foreach (string q in qulist)
+                // If it is not an exception
+                if (response.Contains("Operations"))
                 {
-                    res.Add(JsonConvert.DeserializeObject<Oper>(q));
+                    QueryRes qures = JsonConvert.DeserializeObject<QueryRes>(response);
+
+                    // Deserialize each operation
+                    List<string> qulist = qures.Operations;
+                    List<Oper> res = new List<Oper> { };
+
+                    foreach (string q in qulist)
+                    {
+                        res.Add(JsonConvert.DeserializeObject<Oper>(q));
+                    }
+
+                    Console.WriteLine();
+                    foreach (Oper o in res)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("Operation: {0,0:0}      Calculation: {1,0:0}      Date: {2,0:0}", o.Operation, o.Calculation, o.Date);
+                    }
+
+                    if (qulist.Count == 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("No operations found for ID number " + id);
+                    }
+                    Console.ReadKey();
+
                 }
-
-                Console.WriteLine();
-                foreach (Oper o in res)
+                else
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine("Operation: {0,0:0}      Calculation: {1,0:0}      Date: {2,0:0}", o.Operation, o.Calculation, o.Date);
-                }
-
-                if (qulist.Count == 0)
-                {
+                    // Display the exception
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("No operations found for ID number " + id);
-                }
-                Console.ReadKey();
+                    Exception ex = JsonConvert.DeserializeObject<Exception>(response);
+                    string message = $"{ex.ErrorCode} ({ex.ErrorStatus}): {ex.ErrorMessage}";
+                    Console.WriteLine(); Console.WriteLine(message);
+                    Save(message, "Excep");
+                    Console.ReadKey();
+                }  
             }
-
         }
 
         // Operate the Square Root 
@@ -195,14 +211,30 @@ namespace CalculatorService.Client
                 // Serialize it
                 string param = JsonConvert.SerializeObject(op);
 
-                // Send the petition and deserialize the response
-                SqrtRes sqrtres = JsonConvert.DeserializeObject<SqrtRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
+                // Get the response
+                string response = CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param);
 
-                // Build the complete operation and show it
-                string operation = "√" + res.ToString() + " = " + sqrtres.Square;
-                Console.WriteLine(operation);
-                Save(operation, calc);
-                Console.ReadKey();
+                // If it is not an exception
+                if (response.Contains("Square"))
+                {
+                    SqrtRes sqrtres = JsonConvert.DeserializeObject<SqrtRes>(response);
+
+                    // Build the complete operation and show it
+                    string operation = "√" + res.ToString() + " = " + sqrtres.Square;
+                    Console.WriteLine(operation);
+                    Save(operation, calc);
+                    Console.ReadKey();
+                }
+                else
+                {
+                    // Display the exception
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Exception ex = JsonConvert.DeserializeObject<Exception>(response);
+                    string message = $"{ex.ErrorCode} ({ex.ErrorStatus}): {ex.ErrorMessage}";
+                    Console.WriteLine(); Console.WriteLine(message);
+                    Save(message, "Excep");
+                    Console.ReadKey();
+                }   
             }
         }
 
@@ -272,14 +304,30 @@ namespace CalculatorService.Client
                 // Serialize it
                 string param = JsonConvert.SerializeObject(op);
 
-                // Send the petition and deserialize the response
-                DivRes divres = JsonConvert.DeserializeObject<DivRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
+                // Get the response
+                string response = CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param);
 
-                // Build the complete operation and show it
-                string operation = divd.ToString() + " % " + divs.ToString() + " = " + divres.Quotient + " (Remainder: " + divres.Remainder + ")";
-                Console.WriteLine(operation);
-                Save(operation, calc);
-                Console.ReadKey();
+                // If it is not an exception
+                if (response.Contains("Quotient"))
+                {
+                    DivRes divres = JsonConvert.DeserializeObject<DivRes>(response);
+
+                    // Build the complete operation and show it
+                    string operation = divd.ToString() + " % " + divs.ToString() + " = " + divres.Quotient + " (Remainder: " + divres.Remainder + ")";
+                    Console.WriteLine(operation);
+                    Save(operation, calc);
+                    Console.ReadKey();
+                }
+                else
+                {
+                    // Display the exception
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Exception ex = JsonConvert.DeserializeObject<Exception>(response);
+                    string message = $"{ex.ErrorCode} ({ex.ErrorStatus}): {ex.ErrorMessage}";
+                    Console.WriteLine(); Console.WriteLine(message);
+                    Save(message, "Excep");
+                    Console.ReadKey();
+                }
             }
         }
 
@@ -330,21 +378,37 @@ namespace CalculatorService.Client
                 // Serialize it
                 string param = JsonConvert.SerializeObject(op);
 
-                // Send the petition and deserialize the response
-                MultRes multres = JsonConvert.DeserializeObject<MultRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
+                // Get the response
+                string response = CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param);
 
-                // Build the complete operation and show it
-                string operation = "";
-                foreach (int n in nums)
+                // If it is not an exception
+                if (response.Contains("Product"))
                 {
-                    operation += n.ToString() + " x ";
-                }
-                operation = operation.Substring(0, operation.Length - 2);
-                operation += "= " + multres.Product;
+                    MultRes multres = JsonConvert.DeserializeObject<MultRes>(response);
 
-                Console.WriteLine(operation);
-                Save(operation, calc);
-                Console.ReadKey();
+                    // Build the complete operation and show it
+                    string operation = "";
+                    foreach (int n in nums)
+                    {
+                        operation += n.ToString() + " x ";
+                    }
+                    operation = operation.Substring(0, operation.Length - 2);
+                    operation += "= " + multres.Product;
+
+                    Console.WriteLine(operation);
+                    Save(operation, calc);
+                    Console.ReadKey();
+                }
+                else
+                {
+                    // Display the exception
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Exception ex = JsonConvert.DeserializeObject<Exception>(response);
+                    string message = $"{ex.ErrorCode} ({ex.ErrorStatus}): {ex.ErrorMessage}";
+                    Console.WriteLine(); Console.WriteLine(message);
+                    Save(message, "Excep");
+                    Console.ReadKey();
+                }
             }
         }
 
@@ -413,16 +477,32 @@ namespace CalculatorService.Client
                 // Serialize it
                 string param = JsonConvert.SerializeObject(op);
 
-                // Send the petition and deserialize the response
-                SubRes subres = JsonConvert.DeserializeObject<SubRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
+                // Get the response
+                string response = CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param);
 
-                // Build the complete operation and show it
-                string operation = "";
-                operation += min.ToString() + " - " + sub.ToString() + " = " + subres.Difference;
-                
-                Console.WriteLine(operation);
-                Save(operation, calc);
-                Console.ReadKey();
+                // If it is not an exception
+                if (response.Contains("Difference"))
+                {
+                    SubRes subres = JsonConvert.DeserializeObject<SubRes>(response);
+
+                    // Build the complete operation and show it
+                    string operation = "";
+                    operation += min.ToString() + " - " + sub.ToString() + " = " + subres.Difference;
+
+                    Console.WriteLine(operation);
+                    Save(operation, calc);
+                    Console.ReadKey();
+                }
+                else
+                {
+                    // Display the exception
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Exception ex = JsonConvert.DeserializeObject<Exception>(response);
+                    string message = $"{ex.ErrorCode} ({ex.ErrorStatus}): {ex.ErrorMessage}";
+                    Console.WriteLine(); Console.WriteLine(message);
+                    Save(message, "Excep");
+                    Console.ReadKey();
+                }
             }
         }
 
@@ -474,21 +554,37 @@ namespace CalculatorService.Client
                 // Serialize it
                 string param = JsonConvert.SerializeObject(op);
 
-                // Send the petition and deserialize the response
-                AddRes addres = JsonConvert.DeserializeObject<AddRes>(CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param));
+                // Get the response
+                string response = CallRestMethod($"https://mvcalculator.azurewebsites.net/Calculator/{calc}", param);
 
-                // Build the complete operation and show it
-                string operation = "";
-                foreach (int n in nums)
+                // If it is not an exception
+                if (response.Contains("Sum"))
                 {
-                    operation += n.ToString() + " + ";
-                }
+                    AddRes addres = JsonConvert.DeserializeObject<AddRes>(response);
 
-                operation = operation.Substring(0, operation.Length - 2);
-                operation += "= " +addres.Sum;
-                Console.WriteLine(operation);
-                Console.ReadKey();
-                Save(operation, calc);
+                    // Build the complete operation and show it
+                    string operation = "";
+                    foreach (int n in nums)
+                    {
+                        operation += n.ToString() + " + ";
+                    }
+
+                    operation = operation.Substring(0, operation.Length - 2);
+                    operation += "= " +addres.Sum;
+                    Console.WriteLine(operation);
+                    Save(operation, calc);
+                    Console.ReadKey();                   
+                }
+                else
+                {
+                    // Display the exception
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Exception ex = JsonConvert.DeserializeObject<Exception>(response);
+                    string message = $"{ex.ErrorCode} ({ex.ErrorStatus}): {ex.ErrorMessage}";
+                    Console.WriteLine();  Console.WriteLine(message);
+                    Save(message, "Excep");
+                    Console.ReadKey();  
+                }
             }
         }
 
@@ -568,6 +664,14 @@ namespace CalculatorService.Client
             {
                 return -1;
             }
+        }
+
+        // Ask for a value without verification
+        private static string AskValueRaw()
+        {
+            string key = Console.ReadKey().KeyChar.ToString();
+
+            return key;            
         }
 
         // Receibe the request url and the serializated request

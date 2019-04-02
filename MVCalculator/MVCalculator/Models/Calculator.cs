@@ -25,6 +25,11 @@ namespace MVCalculator.Models
         // Operates the subtraction
         public int sub(int min, int sub)
         {
+            if(min == 0 || sub == 0)
+            {
+                throw new NullReferenceException("");
+            }
+
             int res = min - sub;
 
             return res;
@@ -54,6 +59,10 @@ namespace MVCalculator.Models
         public int div(int divd, int divs)
         {
             int res;
+            if (divd == 0 || divs == 0)
+            {
+                throw new NullReferenceException("");
+            }
 
             if (divs != 0)
             {
@@ -71,6 +80,10 @@ namespace MVCalculator.Models
         public int rem(int divd, int divs)
         {
             int res;
+            if (divd == 0 || divs == 0)
+            {
+                throw new NullReferenceException("");
+            }
 
             if (divs != 0)
             {
@@ -88,6 +101,10 @@ namespace MVCalculator.Models
         public int sqrt(int num)
         {
             double res;
+            if (num == 0)
+            {
+                throw new NullReferenceException("");
+            }
 
             res = Math.Sqrt(Convert.ToDouble(num));
 
