@@ -6,7 +6,12 @@
 
   For running the client:
 
-  1. Download the **Calculator** folder.
+  1. Open the **Calculator** folder.
   2. Execute the _CalculatorService.Client.exe_ file.
 
 * ## Environment requirements and/or details related to using/reviewing the application:
+
+  Alternative route for Application file: 
+     calculator/CalculatorService.Client/CalculatorService.Client/bin/Debug/netcoreapp2.2/win10-x64/CalculatorService.Client.exe
+      
+         
