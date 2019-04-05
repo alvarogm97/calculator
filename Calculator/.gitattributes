@@ -1,0 +1,27 @@
+# These files are text and should be normalized (convert crlf =&gt; lf)
+*.cs      text diff=csharp
+*.xaml    text
+*.csproj  text
+*.sln     text
+*.tt      text
+*.ps1     text
+*.cmd     text
+*.msbuild text
+*.md      text
+*.cshtml  text
+*.html    text
+*.js      text
+*.config  text
+
+# Images should be treated as binary
+# (binary is a macro for -text -diff)
+*.png     binary
+*.jepg    binary
+
+*.sdf     binary
+
+*.sh text eol=lf
+*.initrc text eol=lf
+.salt/states/smppsim/files/SMPPSim text eol=lf
+.salt/states/smppsim/files/SMPPSim.sysconfig text eol=lf
+README text eol=lf
